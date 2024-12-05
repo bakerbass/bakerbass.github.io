@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About Ryan Baker</title>
+    <title>Tech Demos</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -18,35 +18,29 @@
             margin: 50px auto;
             padding: 20px;
         }
+        h1, h2 {
+            color: #0056b3;
+        }
         h1 {
             font-size: 2.5rem;
             margin-bottom: 20px;
         }
-        .profile {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-            margin-bottom: 30px;
-        }
-        .profile img {
-            border-radius: 50%;
-            width: 150px;
-            height: 150px;
-            object-fit: cover;
-        }
-        .details {
-            flex: 1;
-        }
-        .details h2 {
-            font-size: 1.5rem;
+        h2 {
+            font-size: 1.8rem;
+            margin-top: 30px;
             margin-bottom: 10px;
         }
-        .details p {
-            margin: 5px 0;
+        p {
+            margin: 10px 0;
         }
-        .university {
-            font-weight: bold;
-            margin-bottom: 10px;
+        .project {
+            margin-bottom: 40px;
+        }
+        .project img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 10px 0;
         }
         a {
             color: #0073e6;
@@ -59,19 +53,40 @@
 </head>
 <body>
     <div class="container">
-        <h1>About</h1>
-        <div class="profile">
-            <img src="path-to-your-image.jpg" alt="Ryan Baker">
-            <div class="details">
-                <h2>Ryan Baker</h2>
-                <p class="university">University of Miami</p>
-                <p>Bachelor of Science<br>Music Engineering Technology<br>2020–2024</p>
-                <p class="university">Georgia Institute of Technology</p>
-                <p>Master of Science<br>Music Technology<br>2024–2026</p>
-            </div>
+        <h1>Tech Demos</h1>
+
+        <div class="project">
+            <h2>V-Kn Comp</h2>
+            <p>A dynamics compressor plugin capable of saturation that ranges from subtle to overdriven. The DSP algorithm was initially implemented by Ryan Baker for the AES MATLAB VST Hackathon in 2023, where it won first place. The algorithm was then ported to C++ using the JUCE framework to be made into a fully-fledged VST/AU plugin with additional saturation parameters and visualizers.</p>
+            <img src="path-to-vkn-comp-image.jpg" alt="V-Kn Comp Interface">
+            <p>The original MATLAB interface for the compressor:</p>
+            <img src="path-to-matlab-interface-image.jpg" alt="MATLAB Interface">
         </div>
-        <p>Ryan Baker is an avid musician with skills on electric bass, upright bass, guitar, mandolin, banjo, and lap steel. He is a graduate of the Frost School of Music at the University of Miami. Through the Music Engineering program, Ryan has found a passion for engineering that has fueled his ambitions in software and electrical engineering. Ryan is focused on continuing his studies at Georgia Tech to further his research in music technology with a particular interest in human-computer interaction.</p>
-        <p><a href="https://github.com/bakerbass" target="_blank">https://github.com/bakerbass</a></p>
+
+        <div class="project">
+            <h2>Chorus Verb</h2>
+            <p>Similar to V-Kn Comp, Chorus Verb was designed for the AES MATLAB Hackathon, where it won first place. This challenge, presented in July 2024, was to complete a reverb plugin. Several helper functions were provided, including comb, all-pass, and high shelving filters, but the main challenge was to finish the main processing block according to the block diagrams provided. This differs from the V-Kn Comp challenge, which was more open-ended.</p>
+            <p>Once the main processing was completed, two new features were added, which helped to elevate the submission above the others. The first feature was a chorus effect, and the second was a Haas effect, labeled Wideness in the GUI. Additional functionality was added to increase the signal of the reflections or diffusions, which added further control to the decay characteristics.</p>
+            <p>The final challenge was to measure the performance of the reverb plugin, including some preset designs. The GUI screenshot below is an example of a large hall-style reverb.</p>
+            <img src="path-to-chorus-verb-image.jpg" alt="Chorus Verb Interface">
+        </div>
+
+        <div class="project">
+            <h2>SmartPick</h2>
+            <p>SmartPick is a project aimed to increase musical expression for guitarists, built on the Teensy 4.0 development platform. Force sensor data was converted into MIDI control messages which communicate to a custom effects plugin. The effects plugin utilized a modulated biquad lowpass filter and an amplitude modulator that would react based on the force sensor's readings.</p>
+            <p>This project was developed by Ryan for his undergraduate capstone project, as well as a full design document detailing each step in the process.</p>
+            <img src="path-to-smartpick-image.jpg" alt="SmartPick Device">
+        </div>
+
+        <div class="project">
+            <h2>ComboSynth</h2>
+            <p>ComboSynth is a digital hardware synthesizer developed using the DaisySP codebase on the Daisy Field development board. This synth has various effects and features, such as polyphony, an oscilloscope, frequency modulation, a lowpass filter with an LFO, a tremolo, and reverb.</p>
+            <p>The focus of this project was to fit all the desirable features of a synthesizer within the constraints of the development board. A 128x64 pixel screen provides visual readouts to the user, showing a cursor and certain effects based on the selected menu.</p>
+            <p>This synth was developed by Ryan Baker in the summer of 2023 to learn more about the embedded software workflow, and to lay the foundation needed to create other embedded synth projects.</p>
+            <p>ComboSynth can also accept MIDI input thanks to open-source Daisy community projects, found here:</p>
+            <p><a href="https://github.com/electro-smith/DaisyExamples" target="_blank">https://github.com/electro-smith/DaisyExamples</a></p>
+            <img src="path-to-combosynth-image.jpg" alt="ComboSynth Interface">
+        </div>
     </div>
 </body>
 </html>
