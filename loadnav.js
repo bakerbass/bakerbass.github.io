@@ -1,4 +1,4 @@
-// load-nav.js
+// loadnav.js
 document.addEventListener("DOMContentLoaded", function() {
     fetch('nav.html')
         .then(response => response.text())
