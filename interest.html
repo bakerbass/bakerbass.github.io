@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interest Form</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <div id="nav-placeholder"></div>
+    <script src="loadnav.js"></script>
+
+    <main>
+        <h1>Interest Form</h1>
+        <form id="interest-form" style="max-width:400px;margin:auto;">
+            <label for="name">Name:</label><br>
+            <input type="text" id="name" name="name" required><br><br>
+
+            <label for="phone">Phone Number:</label><br>
+            <input type="tel" id="phone" name="phone" required pattern="[0-9]{10,15}"><br><br>
+
+            <label for="email">Email:</label><br>
+            <input type="email" id="email" name="email" required><br><br>
+
+            <label for="interest">What are you interested in?</label><br>
+            <textarea id="interest" name="interest" rows="4" required></textarea><br><br>
+
+            <button type="submit">Submit</button>
+        </form>
+        <div id="form-message" style="text-align:center;margin-top:20px;"></div>
+    </main>
+
+    <script>
+    document.getElementById('interest-form').onsubmit = function(e) {
+        e.preventDefault();
+        document.getElementById('form-message').textContent = 'Thank you for your submission!';
+        this.reset();
+    };
+    </script>
+</body>
+</html>
