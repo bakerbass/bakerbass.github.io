@@ -1,80 +1,93 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About Ryan Baker</title>
-    <link rel="stylesheet" href="styles.css">
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f8f8f5;
-            color: #333;
-            line-height: 1.6;
-        }
-        .container {
-            max-width: 800px;
-            margin: 50px auto;
-            padding: 20px;
-        }
-        h1 {
-            font-size: 2.5rem;
-            margin-bottom: 20px;
-        }
-        .profile {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-            margin-bottom: 30px;
-        }
-        .profile img {
-            border-radius: 50%;
-            width: 150px;
-            height: 150px;
-            object-fit: cover;
-        }
-        .details {
-            flex: 1;
-        }
-        .details h2 {
-            font-size: 1.5rem;
-            margin-bottom: 10px;
-        }
-        .details p {
-            margin: 5px 0;
-        }
-        .university {
-            font-weight: bold;
-            margin-bottom: 10px;
-        }
-        a {
-            color: #0073e6;
-            text-decoration: none;
-        }
-        a:hover {
-            text-decoration: underline;
-        }
-    </style>
+    <title>Ryan Baker | Musician & Engineer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@400;700;900&family=Roboto:wght@400;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="modern.css">
 </head>
+
 <body>
     <div id="nav-placeholder"></div>
     <script src="loadnav.js"></script>
+
+    <header class="hero">
+        <div class="container">
+            <h1>Ryan Baker</h1>
+            <p>Musician, Engineer, Researcher</p>
+        </div>
+    </header>
+
     <div class="container">
-        <h1>About</h1>
         <div class="profile">
-            <img src="headshotgt.png" alt="Ryan Baker">
+            <img src="assets/profile_new.jpeg" alt="Ryan Baker">
             <div class="details">
-                <h2>Ryan Baker</h2>
-                <p class="university">University of Miami</p>
-                <p>Bachelor of Science<br>Music Engineering Technology<br>2020–2024</p>
-                <p class="university">Georgia Institute of Technology</p>
-                <p>Master of Science<br>Music Technology<br>2024–2026</p>
+                <h2>About Me</h2>
+                <p>Ryan Baker is an avid musician with skills on electric bass, upright bass, guitar, mandolin, banjo,
+                    and lap steel. He is a graduate of the Frost School of Music at the University of Miami. Through the
+                    Music Engineering program, Ryan has found a passion for engineering that has fueled his ambitions in
+                    software and electrical engineering. Ryan is focused on continuing his studies at Georgia Tech to
+                    further his research in music technology with a particular interest in human-computer interaction.
+                </p>
+
+                <div class="skills-section">
+                    <h3>Skills</h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">Music Technology</span>
+                        <span class="skill-tag">Software Engineering</span>
+                        <span class="skill-tag">Electrical Engineering</span>
+                        <span class="skill-tag">Python</span>
+                        <span class="skill-tag">C++</span>
+                        <span class="skill-tag">MATLAB</span>
+                        <span class="skill-tag">Web Development</span>
+                        <span class="skill-tag">Bass Guitar</span>
+                        <span class="skill-tag">Music Theory</span>
+                    </div>
+                </div>
+
+                <div style="margin-top: 20px;">
+                    <p class="university">University of Miami</p>
+                    <p>Bachelor of Science<br>Music Engineering Technology<br>2020–2024</p>
+                    <p class="university">Georgia Institute of Technology</p>
+                    <p>Master of Science<br>Music Technology<br>2024–2026</p>
+                </div>
             </div>
         </div>
-        <p>Ryan Baker is an avid musician with skills on electric bass, upright bass, guitar, mandolin, banjo, and lap steel. He is a graduate of the Frost School of Music at the University of Miami. Through the Music Engineering program, Ryan has found a passion for engineering that has fueled his ambitions in software and electrical engineering. Ryan is focused on continuing his studies at Georgia Tech to further his research in music technology with a particular interest in human-computer interaction.</p>
-        <p><a href="https://github.com/bakerbass" target="_blank">https://github.com/bakerbass</a></p>
+
+        <section>
+            <h2 style="text-align: center; margin-top: var(--spacing-xl);">Portfolio</h2>
+            <div class="category-grid">
+                <div class="category-card">
+                    <div class="category-icon">💻</div>
+                    <h3>Tech Demos</h3>
+                    <p>Explore my technical projects, including software development, audio plugins, and hardware
+                        engineering.</p>
+                    <a href="tech.html" class="btn-outline">View Projects</a>
+                </div>
+
+                <div class="category-card">
+                    <div class="category-icon">🎵</div>
+                    <h3>Music</h3>
+                    <p>Listen to my recordings, compositions, and performances across various instruments and genres.
+                    </p>
+                    <a href="music.html" class="btn-outline">Listen Now</a>
+                </div>
+
+                <div class="category-card">
+                    <div class="category-icon">✍️</div>
+                    <h3>Writing</h3>
+                    <p>Read my research papers, technical articles, and thoughts on music and technology.</p>
+                    <a href="writing.html" class="btn-outline">Read Articles</a>
+                </div>
+            </div>
+        </section>
     </div>
 </body>
+
 </html>

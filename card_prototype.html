@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Card Prototype | Ryan Baker</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@400;700;900&family=Roboto:wght@400;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="modern.css">
+</head>
+
+<body>
+    <div id="nav-placeholder"></div>
+    <script src="loadnav.js"></script>
+
+    <header class="hero">
+        <div class="container">
+            <h1>Card Prototype</h1>
+            <p>Testing expandable project cards with modal views</p>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="project-grid">
+            <!-- Prototype Card 1 -->
+            <article class="project-card-short">
+                <img src="assets/vkn-comp.png" alt="V-Kn Comp">
+                <div class="content">
+                    <h3>V-Kn Comp</h3>
+                    <p>A dynamics compressor plugin capable of saturation that ranges from subtle to overdriven. Winner
+                        of the AES MATLAB VST Hackathon 2023.</p>
+                    <button class="read-more-btn">Read More</button>
+
+                    <!-- Hidden Full Content -->
+                    <div class="full-content" style="display: none;">
+                        <img src="assets/vkn-comp.png" alt="V-Kn Comp Interface">
+                        <h2>V-Kn Comp</h2>
+                        <p>A dynamics compressor plugin capable of saturation that ranges from subtle to overdriven. The
+                            DSP algorithm was initially implemented by Ryan Baker for the AES MATLAB VST Hackathon in
+                            2023, where it won first place.</p>
+                        <p>The algorithm was then ported to C++ using the JUCE framework to be made into a fully-fledged
+                            VST/AU plugin with additional saturation parameters and visualizers.</p>
+                        <p>Features include:</p>
+                        <ul>
+                            <li>Variable knee compression</li>
+                            <li>Input/Output gain staging</li>
+                            <li>Saturation module</li>
+                            <li>Real-time gain reduction metering</li>
+                        </ul>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Prototype Card 2 -->
+            <article class="project-card-short">
+                <img src="assets/chorus-verb.png" alt="Chorus Verb">
+                <div class="content">
+                    <h3>Chorus Verb</h3>
+                    <p>A creative reverb plugin with built-in chorus modulation and stereo widening effects. Designed
+                        for the 2024 AES MATLAB Hackathon.</p>
+                    <button class="read-more-btn">Read More</button>
+
+                    <!-- Hidden Full Content -->
+                    <div class="full-content" style="display: none;">
+                        <img src="assets/chorus-verb.png" alt="Chorus Verb Interface">
+                        <h2>Chorus Verb</h2>
+                        <p>Similar to V-Kn Comp, Chorus Verb was designed for the AES MATLAB Hackathon, where it won
+                            first place. This challenge, presented in July 2024, was to complete a reverb plugin.</p>
+                        <p>Once the main processing was completed, two new features were added, which helped to elevate
+                            the submission above the others. The first feature was a chorus effect, and the second was a
+                            Haas effect, labeled Wideness in the GUI.</p>
+                        <p>Additional functionality was added to increase the signal of the reflections or diffusions,
+                            which added further control to the decay characteristics.</p>
+                    </div>
+                </div>
+            </article>
+        </div>
+    </div>
+
+    <!-- Modal Structure -->
+    <div class="modal-overlay" id="projectModal">
+        <div class="modal-content">
+            <button class="close-modal">&times;</button>
+            <div class="modal-body">
+                <!-- Content will be injected here -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const modal = document.getElementById('projectModal');
+            const modalBody = modal.querySelector('.modal-body');
+            const closeBtn = modal.querySelector('.close-modal');
+            const readMoreBtns = document.querySelectorAll('.read-more-btn');
+
+            // Open Modal
+            readMoreBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const card = btn.closest('.project-card-short');
+                    const fullContent = card.querySelector('.full-content').innerHTML;
+
+                    modalBody.innerHTML = fullContent;
+                    modal.classList.add('active');
+                    document.body.style.overflow = 'hidden'; // Prevent background scrolling
+                });
+            });
+
+            // Close Modal Function
+            const closeModal = () => {
+                modal.classList.remove('active');
+                document.body.style.overflow = ''; // Restore scrolling
+            };
+
+            // Close on Button Click
+            closeBtn.addEventListener('click', closeModal);
+
+            // Close on Overlay Click
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    closeModal();
+                }
+            });
+
+            // Close on Escape Key
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && modal.classList.contains('active')) {
+                    closeModal();
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

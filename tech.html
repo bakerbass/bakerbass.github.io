@@ -1,95 +1,222 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tech Demos</title>
-    <link rel="stylesheet" href="styles.css">
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f8f8f5;
-            color: #333;
-            line-height: 1.6;
-        }
-        .container {
-            max-width: 800px;
-            margin: 50px auto;
-            padding: 20px;
-        }
-        h1, h2 {
-            color: #0056b3;
-        }
-        h1 {
-            font-size: 2.5rem;
-            margin-bottom: 20px;
-        }
-        h2 {
-            font-size: 1.8rem;
-            margin-top: 30px;
-            margin-bottom: 10px;
-        }
-        p {
-            margin: 10px 0;
-        }
-        .project {
-            margin-bottom: 40px;
-        }
-        .project img {
-            max-width: 100%;
-            height: auto;
-            display: block;
-            margin: 10px 0;
-        }
-        a {
-            color: #0073e6;
-            text-decoration: none;
-        }
-        a:hover {
-            text-decoration: underline;
-        }
-    </style>
+    <title>Tech Demos | Ryan Baker Music Technologist</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@400;700;900&family=Roboto:wght@400;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="modern.css">
 </head>
+
 <body>
     <div id="nav-placeholder"></div>
     <script src="loadnav.js"></script>
+
+    <header class="hero">
+        <div class="container">
+            <h1>Tech Demos</h1>
+            <p>Exploring Audio, DSP, and Embedded Systems</p>
+        </div>
+    </header>
+
     <div class="container">
-        <h1>Tech Demos</h1>
+        <div class="project-grid">
 
-        <div class="project">
-            <h2>V-Kn Comp</h2>
-            <p>A dynamics compressor plugin capable of saturation that ranges from subtle to overdriven. The DSP algorithm was initially implemented by Ryan Baker for the AES MATLAB VST Hackathon in 2023, where it won first place. The algorithm was then ported to C++ using the JUCE framework to be made into a fully-fledged VST/AU plugin with additional saturation parameters and visualizers.</p>
-            <img src="path-to-vkn-comp-image.jpg" alt="V-Kn Comp Interface">
-            <p>The original MATLAB interface for the compressor:</p>
-            <img src="path-to-matlab-interface-image.jpg" alt="MATLAB Interface">
-        </div>
+            <!-- Audio Plugins (Grouped) -->
+            <article class="project-card-short">
+                <img src="assets/vkn_juce.png" alt="Audio Plugins">
+                <div class="content">
+                    <h3>Award Winning Audio Plugins</h3>
+                    <p>
+                        A collection of VST plugins developed for the AES MATLAB Hackathons, including a compressor,
+                        reverb, and a vocal processor.
+                    </p>
+                    <button class="read-more-btn">Read More</button>
 
-        <div class="project">
-            <h2>Chorus Verb</h2>
-            <p>Similar to V-Kn Comp, Chorus Verb was designed for the AES MATLAB Hackathon, where it won first place. This challenge, presented in July 2024, was to complete a reverb plugin. Several helper functions were provided, including comb, all-pass, and high shelving filters, but the main challenge was to finish the main processing block according to the block diagrams provided. This differs from the V-Kn Comp challenge, which was more open-ended.</p>
-            <p>Once the main processing was completed, two new features were added, which helped to elevate the submission above the others. The first feature was a chorus effect, and the second was a Haas effect, labeled Wideness in the GUI. Additional functionality was added to increase the signal of the reflections or diffusions, which added further control to the decay characteristics.</p>
-            <p>The final challenge was to measure the performance of the reverb plugin, including some preset designs. The GUI screenshot below is an example of a large hall-style reverb.</p>
-            <img src="path-to-chorus-verb-image.jpg" alt="Chorus Verb Interface">
-        </div>
+                    <!-- Hidden Full Content -->
+                    <div class="full-content" style="display: none;">
+                        <h2>Suite Talk</h2>
+                        <img src="assets/suitetalk.png" alt="Suite Talk Interface">
+                        <p><strong>Challenge: AES MATLAB Hackathon 2025</strong></p>
+                        <p>In 28 hours, develop a VST in MATLAB that helps podcasters achieve a professional sound
+                            quality, while removing background noise. Combine Voice Activity Detection (VAD), A.I. and
+                            traditional DSP to provide a quality audio output with an easy-to-use interface.</p>
+                        <p><strong>Solution: Suite Talk – Gold Prize Winner</strong></p>
+                        <ul>
+                            <li><strong>A.I. Speech Enhancement</strong> – Remove non-speech noise using MetricGAN model
+                            </li>
+                            <li><strong>VAD / Gate</strong> – Detect speech in a signal, and open a noise gate so
+                                extraneous noise is reduced</li>
+                            <li><strong>Dynamic EQ and hum reducer</strong> – Reduce 60Hz hum and handle common speech
+                                EQ in the background</li>
+                        </ul>
 
-        <div class="project">
-            <h2>SmartPick</h2>
-            <p>SmartPick is a project aimed to increase musical expression for guitarists, built on the Teensy 4.0 development platform. Force sensor data was converted into MIDI control messages which communicate to a custom effects plugin. The effects plugin utilized a modulated biquad lowpass filter and an amplitude modulator that would react based on the force sensor's readings.</p>
-            <p>This project was developed by Ryan for his undergraduate capstone project, as well as a full design document detailing each step in the process.</p>
-            <img src="path-to-smartpick-image.jpg" alt="SmartPick Device">
-        </div>
+                        <hr style="margin: 2rem 0; border: 0; border-top: 1px solid #eee;">
 
-        <div class="project">
-            <h2>ComboSynth</h2>
-            <p>ComboSynth is a digital hardware synthesizer developed using the DaisySP codebase on the Daisy Field development board. This synth has various effects and features, such as polyphony, an oscilloscope, frequency modulation, a lowpass filter with an LFO, a tremolo, and reverb.</p>
-            <p>The focus of this project was to fit all the desirable features of a synthesizer within the constraints of the development board. A 128x64 pixel screen provides visual readouts to the user, showing a cursor and certain effects based on the selected menu.</p>
-            <p>This synth was developed by Ryan Baker in the summer of 2023 to learn more about the embedded software workflow, and to lay the foundation needed to create other embedded synth projects.</p>
-            <p>ComboSynth can also accept MIDI input thanks to open-source Daisy community projects, found here:</p>
-            <p><a href="https://github.com/electro-smith/DaisyExamples" target="_blank">https://github.com/electro-smith/DaisyExamples</a></p>
-            <img src="path-to-combosynth-image.jpg" alt="ComboSynth Interface">
+                        <h2>Chorus Verb</h2>
+                        <img src="assets/chorus-verb.png" alt="Chorus Verb Interface">
+                        <p><strong>Challenge: AES MATLAB Hackathon 2024</strong></p>
+                        <p>Complete a reverb plugin using provided helper filters (comb, all-pass, high shelving) and
+                            block diagrams. The first challenge was to finish the main processing block.</p>
+                        <p><strong>Solution: Chorus Verb – First Place Winner</strong></p>
+                        <ul>
+                            <li><strong>Chorus Effect</strong> – Adds modulation and depth to the reverb tail</li>
+                            <li><strong>Haas Effect (Wideness)</strong> – Creates a wider stereo image</li>
+                            <li><strong>Reflection Control</strong> – Increases signal of reflections/diffusions for
+                                better decay control</li>
+                        </ul>
+                        <p>The final challenge was to measure the performance of the reverb plugin, including some
+                            preset designs.</p>
+                        <p>
+                            After completing the challenge, the plugin was calibrated by measuring the RT60 of the
+                            impulse response and creating a lookup table for the decay time.
+                        </p>
+                        <hr style="margin: 2rem 0; border: 0; border-top: 1px solid #eee;">
+
+                        <h2>V-Kn Comp</h2>
+                        <img src="assets/vkn-comp.png" alt="V-Kn Comp Interface">
+                        <p><strong>Challenge: AES MATLAB Hackathon 2023</strong></p>
+                        <p>Implement a dynamics compressor plugin.</p>
+                        <p><strong>Solution: V-Kn Comp – First Place Winner</strong></p>
+                        <ul>
+                            <li><strong>Variable knee compression</strong> – Smooth transition between uncompressed and
+                                compressed signals</li>
+                            <li><strong>Input/Output gain staging</strong> – Precise level control</li>
+                            <li><strong>Saturation module</strong> – Adds harmonic character</li>
+                            <li><strong>Real-time metering</strong> – Visual feedback for gain reduction</li>
+                        </ul>
+                    </div>
+                </div>
+            </article>
+
+            <!-- SmartPick -->
+            <article class="project-card-short">
+                <img src="assets/smartpick.jpg" alt="SmartPick Device">
+                <div class="content">
+                    <h3>SmartPick</h3>
+                    <p>A MIDI-enabled guitar pick built on the Teensy 4.0 platform for enhanced musical expression.</p>
+                    <button class="read-more-btn">Read More</button>
+
+                    <!-- Hidden Full Content -->
+                    <div class="full-content" style="display: none;">
+                        <h2>SmartPick</h2>
+                        <img src="assets/smartpick.jpg" alt="SmartPick Device">
+                        <p>SmartPick is a project aimed to increase musical expression for guitarists, built on the
+                            Teensy
+                            4.0 development platform. Force sensor data was converted into MIDI control messages which
+                            communicate with a custom effects plugin. The effects plugin utilized a modulated biquad
+                            lowpass
+                            filter and an amplitude modulator that would react based on the force sensor's readings.</p>
+                        <p>This project was developed by Ryan for his undergraduate capstone project, as well as a full
+                            design document detailing each step in the process.</p>
+                    </div>
+                </div>
+            </article>
+
+            <!-- GuitarBot -->
+            <article class="project-card-short">
+                <!-- Placeholder image for now since one wasn't explicitly provided, using a generic tech/code placeholder or just the video thumbnail if I could fetch it. I'll use a generic placeholder or just omit the image in the short card if I don't have one. 
+                     Actually, I'll use the YouTube thumbnail if I can guess it, but safe bet is to use a placeholder or just no image. 
+                     Wait, the user wants an image. I'll use the vkn-comp one as a placeholder or maybe I can use a generic one. 
+                     Let's use a placeholder from the assets if available. I see 'extract_assets...' in artifacts. 
+                     I'll just use the YouTube embed in the full content and maybe no image in the short card for now, or reuse one. 
+                     Actually, I'll use a solid color div or just the text. 
+                     User said "have a short paragraph and an image". 
+                     I will use the 'combosynth.png' as a placeholder for now and let the user know. -->
+                <img src="assets/guitarbot.png" alt="GuitarBot">
+                <div class="content">
+                    <h3>GuitarBot Jams</h3>
+                    <p>A backend for interactive improvisation with Georgia Tech's robotic guitarist.</p>
+                    <button class="read-more-btn">Read More</button>
+
+                    <!-- Hidden Full Content -->
+                    <div class="full-content" style="display: none;">
+                        <h2>GuitarBot Jams</h2>
+                        <p>GuitarBot is a robotic guitarist at Georgia Tech's Robotic Musicianship
+                            laboratory. Upon joining the lab, Ryan Baker was instantly drawn to the
+                            project.</p>
+                        <p>However, there was no way to interactively play along with GuitarBot yet.
+                            Baker developed a backend that allowed a user to play audio into a DAW,
+                            which is then automatically transcribed into chord information for GuitarBot
+                            to improvise over. This is part of ongoing research at Georgia Tech.</p>
+                        <iframe width="560" height="315"
+                            src="https://www.youtube.com/embed/U_UtvMRulFA?si=F8pNP75sxm3YGVI0"
+                            title="YouTube video player" frameborder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                            allowfullscreen></iframe>
+                    </div>
+                </div>
+            </article>
+
         </div>
     </div>
+
+    <!-- Modal Structure -->
+    <div class="modal-overlay" id="projectModal">
+        <div class="modal-content">
+            <button class="close-modal">&times;</button>
+            <div class="modal-body">
+                <!-- Content will be injected here -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const modal = document.getElementById('projectModal');
+            const modalBody = modal.querySelector('.modal-body');
+            const closeBtn = modal.querySelector('.close-modal');
+
+            // Event Delegation for Open Modal
+            document.addEventListener('click', (e) => {
+                if (e.target.matches('.read-more-btn')) {
+                    const btn = e.target;
+                    const card = btn.closest('.project-card-short');
+                    if (card) {
+                        const fullContentDiv = card.querySelector('.full-content');
+                        if (fullContentDiv) {
+                            const fullContent = fullContentDiv.innerHTML;
+                            modalBody.innerHTML = fullContent;
+                            modal.classList.add('active');
+                            document.body.style.overflow = 'hidden'; // Prevent background scrolling
+                        }
+                    }
+                }
+            });
+
+            // Close Modal Function
+            const closeModal = () => {
+                modal.classList.remove('active');
+                document.body.style.overflow = ''; // Restore scrolling
+            };
+
+            // Close on Button Click
+            if (closeBtn) {
+                closeBtn.addEventListener('click', closeModal);
+            }
+
+            // Close on Overlay Click
+            if (modal) {
+                modal.addEventListener('click', (e) => {
+                    if (e.target === modal) {
+                        closeModal();
+                    }
+                });
+            }
+
+            // Close on Escape Key
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && modal && modal.classList.contains('active')) {
+                    closeModal();
+                }
+            });
+        });
+    </script>
 </body>
+
 </html>
