@@ -8,9 +8,9 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        href="https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@400;700;900&family=Roboto:wght@400;700&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Outfit:wght@300;400;500;600&display=swap"
         rel="stylesheet">
-    <link rel="stylesheet" href="modern.css">
+    <link rel="stylesheet" href="minimalist.css">
 </head>
 
 <body>
@@ -18,16 +18,20 @@
     <script src="loadnav.js"></script>
 
     <header class="hero">
-        <div class="container">
-            <h1>Ryan Baker</h1>
-            <p>Musician, Engineer, Researcher</p>
+        <div class="hero-content">
+            <div class="hero-line"></div>
+            <h1>Ryan<br><em>Baker</em></h1>
+            <p class="hero-subtitle">Musician &nbsp;&middot;&nbsp; Engineer &nbsp;&middot;&nbsp; Researcher</p>
         </div>
     </header>
 
     <div class="container">
         <div class="profile">
-            <img src="assets/profile_new.jpeg" alt="Ryan Baker">
+            <div class="profile-image-wrap">
+                <img src="assets/profile_new.jpeg" alt="Ryan Baker">
+            </div>
             <div class="details">
+                <span class="section-label">About</span>
                 <h2>About Me</h2>
                 <p>Ryan Baker is an avid musician with skills on electric bass, upright bass, guitar, mandolin, banjo,
                     and lap steel. He is a graduate of the Frost School of Music at the University of Miami. Through the
@@ -51,17 +55,20 @@
                     </div>
                 </div>
 
-                <div style="margin-top: 20px;">
+                <div class="education-block">
                     <p class="university">University of Miami</p>
-                    <p>Bachelor of Science<br>Music Engineering Technology<br>2020–2024</p>
+                    <p>Bachelor of Science &nbsp;&middot;&nbsp; Music Engineering Technology</p>
+                    <p>2020–2024</p>
                     <p class="university">Georgia Institute of Technology</p>
-                    <p>Master of Science<br>Music Technology<br>2024–2026</p>
+                    <p>Master of Science &nbsp;&middot;&nbsp; Music Technology</p>
+                    <p>2024–2026</p>
                 </div>
             </div>
         </div>
 
-        <section>
-            <h2 style="text-align: center; margin-top: var(--spacing-xl);">Portfolio</h2>
+        <div class="portfolio-section">
+            <span class="section-label">Work</span>
+            <h2>Portfolio</h2>
             <div class="category-grid">
                 <div class="category-card">
                     <div class="category-icon">💻</div>
@@ -74,8 +81,7 @@
                 <div class="category-card">
                     <div class="category-icon">🎵</div>
                     <h3>Music</h3>
-                    <p>Listen to my recordings, compositions, and performances across various instruments and genres.
-                    </p>
+                    <p>Listen to my recordings, compositions, and performances across various instruments and genres.</p>
                     <a href="music.html" class="btn-outline">Listen Now</a>
                 </div>
 
@@ -86,7 +92,7 @@
                     <a href="mixing.html" class="btn-outline">View Content</a>
                 </div>
             </div>
-        </section>
+        </div>
     </div>
 </body>
 
