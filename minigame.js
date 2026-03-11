@@ -57,6 +57,46 @@ function launchMinigame() {
     document.getElementById("start-game-btn").addEventListener("click", startGame);
 }
 
+let audioCtx;
+
+const pentatonicFrequencies = [
+    261.63, // C4
+    293.66, // D4
+    329.63, // E4
+    392.00, // G4
+    440.00, // A4
+    523.25, // C5
+    587.33, // D5
+    659.25, // E5
+    783.99, // G5
+    880.00, // A5
+    1046.50 // C6
+];
+
+function playNote(freq) {
+    if (!audioCtx) {
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    }
+    if (audioCtx.state === 'suspended') {
+        audioCtx.resume();
+    }
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    
+    osc.type = 'sine';
+    osc.frequency.value = freq;
+    
+    gain.gain.setValueAtTime(0, audioCtx.currentTime);
+    gain.gain.linearRampToValueAtTime(0.3, audioCtx.currentTime + 0.05);
+    gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.5);
+    
+    osc.connect(gain);
+    gain.connect(audioCtx.destination);
+    
+    osc.start();
+    osc.stop(audioCtx.currentTime + 0.5);
+}
+
 function startGame() {
     const startBtn = document.getElementById("start-game-btn");
     startBtn.style.display = "none";
@@ -125,6 +165,13 @@ function startGame() {
                 scoreElement.innerText = score;
                 clearInterval(fallInterval);
                 emoji.remove();
+                
+                // Audio feedback mapping X to pentatonic scale
+                let caughtX = emojiRect.left - gameArea.getBoundingClientRect().left + (emojiRect.width / 2);
+                let normalizedX = caughtX / gameArea.offsetWidth;
+                let noteIndex = Math.floor(normalizedX * pentatonicFrequencies.length);
+                noteIndex = Math.max(0, Math.min(noteIndex, pentatonicFrequencies.length - 1));
+                playNote(pentatonicFrequencies[noteIndex]);
                 
                 // Visual feedback for catch
                 basket.style.transform = "scale(1.1)";
