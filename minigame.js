@@ -102,7 +102,7 @@ const pentatonicFrequencies = [
     1046.50 // C6
 ];
 
-function playNote(freq, score) {
+function initAudio() {
     if (!audioCtx) {
         audioCtx = new (window.AudioContext || window.webkitAudioContext)();
         distortionNode = audioCtx.createWaveShaper();
@@ -118,6 +118,10 @@ function playNote(freq, score) {
     if (audioCtx.state === 'suspended') {
         audioCtx.resume();
     }
+}
+
+function playNote(freq, score) {
+    if (!audioCtx) return;
 
     // Distortion builds much slower (5x slower)
     const intensity = Math.min(score / 500, 1.0);
@@ -189,6 +193,7 @@ function playNote(freq, score) {
 }
 
 function startGame() {
+    initAudio();
     const startBtn = document.getElementById("start-game-btn");
     startBtn.style.display = "none";
 
@@ -203,10 +208,10 @@ function startGame() {
 
     const gameEmojis = ['🤖', '🎙️', '💻', '🎵', '🎧'];
 
-    // Move basket
     const mouseMoveHandler = (e) => {
+        const clientX = e.touches ? e.touches[0].clientX : e.clientX;
         const rect = gameArea.getBoundingClientRect();
-        let x = e.clientX - rect.left - (basket.offsetWidth / 2);
+        let x = clientX - rect.left - (basket.offsetWidth / 2);
 
         // Bounds checking
         if (x < 0) x = 0;
@@ -216,6 +221,10 @@ function startGame() {
     };
 
     gameArea.addEventListener("mousemove", mouseMoveHandler);
+    gameArea.addEventListener("touchmove", (e) => {
+        e.preventDefault(); // Prevent scrolling while playing
+        mouseMoveHandler(e);
+    }, { passive: false });
 
     function spawnEmoji() {
         if (isGameOver) return;

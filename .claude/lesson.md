@@ -13,7 +13,7 @@ Then open http://localhost:8000 in a browser.
 ## Branches
 
 - `main` — production (live at bakerbass.github.io)
-- `minimalist-redesign` — dark editorial theme (Cormorant Garamond + Outfit, gold accent, parallax hero with header_bg.png overlay, glassmorphism nav)
+- `minimalist-redesign` — dark editorial theme (Cormorant Garamond + Outfit, gold accent, parallax hero with header_bg_cropped.png overlay, glassmorphism nav)
 
 ## Stylesheet
 
