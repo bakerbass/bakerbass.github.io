@@ -94,6 +94,10 @@ a:hover {
     padding: var(--spacing-xl) var(--spacing-lg);
 }
 
+#about {
+    scroll-margin-top: 60px;
+}
+
 /* ─── NAVBAR ─────────────────────────────────────────────── */
 .navbar {
     background: var(--bg-glass);
@@ -220,6 +224,34 @@ a:hover {
     text-transform: uppercase;
     color: var(--text-secondary);
     margin: 0;
+}
+
+/* ─── SCROLL ARROW ───────────────────────────────────────── */
+.scroll-arrow {
+    position: absolute;
+    bottom: var(--spacing-xl);
+    left: 50%;
+    transform: translateX(-50%);
+    color: var(--text-secondary);
+    z-index: 10;
+    animation: bounce 2.5s infinite;
+    transition: color var(--transition);
+}
+
+.scroll-arrow:hover {
+    color: var(--accent);
+}
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateX(-50%) translateY(0);
+    }
+    40% {
+        transform: translateX(-50%) translateY(-15px);
+    }
+    60% {
+        transform: translateX(-50%) translateY(-7px);
+    }
 }
 
 /* ─── SECTION LABEL ──────────────────────────────────────── */
