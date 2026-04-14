@@ -87,7 +87,8 @@
                 tagsEl.appendChild(s);
             });
 
-            document.getElementById('post-body').innerHTML = marked.parse(markdown);
+            const cleaned = markdown.replace(/<!--[\s\S]*?-->/g, '');
+            document.getElementById('post-body').innerHTML = marked.parse(cleaned);
         })
         .catch(function() {
             document.getElementById('post-title').textContent = 'Post not found';
