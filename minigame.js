@@ -60,6 +60,7 @@ function launchMinigame() {
 let audioCtx;
 let convolverNode;
 let masterGain;
+let ladderFilter = null;
 
 function makeDistortionCurve(amount) {
     const k = typeof amount === 'number' ? amount : 50;
@@ -109,7 +110,19 @@ function initAudio() {
         convolverNode.buffer = createImpulseResponse(audioCtx);
 
         masterGain = audioCtx.createGain();
-        masterGain.connect(audioCtx.destination);
+
+        // 4-pole ladder filter approximation: 4 cascaded lowpass biquads (24+ dB/oct)
+        // Starts fully open; paddle X controls cutoff in real time
+        ladderFilter = Array.from({ length: 4 }, () => {
+            const f = audioCtx.createBiquadFilter();
+            f.type = 'lowpass';
+            f.frequency.value = 24000; // ~16 kHz perceived after cascade correction
+            f.Q.value = 0.7;
+            return f;
+        });
+        ladderFilter.reduce((prev, curr) => { prev.connect(curr); return curr; });
+        masterGain.connect(ladderFilter[0]);
+        ladderFilter[ladderFilter.length - 1].connect(audioCtx.destination);
 
         // Connect reverb tail to master once — per-note wetGains feed into this
         convolverNode.connect(masterGain);
@@ -225,6 +238,15 @@ function startGame() {
         if (x > gameArea.offsetWidth - basket.offsetWidth) x = gameArea.offsetWidth - basket.offsetWidth;
 
         basket.style.left = x + "px";
+
+        if (ladderFilter) {
+            const normalizedX = x / (gameArea.offsetWidth - basket.offsetWidth);
+            // 4 cascaded Butterworth biquads shift the combined -3dB point to ~0.66x the
+            // nominal frequency. Dividing by that factor keeps perceived cutoff accurate.
+            const CASCADE_CORRECTION = 1 / 0.66; // ≈ 1.52
+            const targetCutoff = 200 * Math.pow(80, normalizedX); // 200 Hz → 16 kHz perceived
+            ladderFilter.forEach(f => f.frequency.setTargetAtTime(targetCutoff * CASCADE_CORRECTION, audioCtx.currentTime, 0.02));
+        }
     };
 
     gameArea.addEventListener("mousemove", mouseMoveHandler);
