@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Post | Ryan Baker</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Outfit:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+    <link rel="stylesheet" href="minimalist.css">
+</head>
+
+<body>
+    <div id="nav-placeholder"></div>
+    <script src="loadnav.js"></script>
+
+    <header class="page-header container">
+        <span class="section-label">Writing</span>
+        <h1 id="post-title">Loading&hellip;</h1>
+        <p id="post-date" class="post-header-date"></p>
+        <div id="post-header-tags" class="skill-tags"></div>
+    </header>
+
+    <main class="container">
+        <article id="post-body" class="post-body"></article>
+        <nav class="post-back">
+            <a href="writing.html">&larr; All Posts</a>
+        </nav>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/4.3.0/marked.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+
+    <script>
+        marked.setOptions({
+            highlight: function(code, lang) {
+                if (lang && hljs.getLanguage(lang)) {
+                    return hljs.highlight(code, { language: lang }).value;
+                }
+                return hljs.highlightAuto(code).value;
+            },
+            gfm: true,
+            breaks: false
+        });
+
+        const params = new URLSearchParams(window.location.search);
+        const slug = params.get('slug');
+
+        if (!slug) {
+            window.location.href = 'writing.html';
+        }
+
+        Promise.all([
+            fetch('posts/posts.json').then(r => r.json()),
+            fetch('posts/' + slug + '.md').then(r => {
+                if (!r.ok) throw new Error('Post not found');
+                return r.text();
+            })
+        ])
+        .then(function(results) {
+            const posts = results[0];
+            const markdown = results[1];
+            const meta = posts.find(function(p) { return p.slug === slug; });
+
+            if (!meta || meta.draft) {
+                window.location.href = 'writing.html';
+                return;
+            }
+
+            document.title = meta.title + ' | Ryan Baker';
+            document.getElementById('post-title').textContent = meta.title;
+
+            const date = new Date(meta.date + 'T00:00:00');
+            document.getElementById('post-date').textContent = date.toLocaleDateString('en-US', {
+                year: 'numeric', month: 'long', day: 'numeric'
+            });
+
+            const tagsEl = document.getElementById('post-header-tags');
+            (meta.tags || []).forEach(function(t) {
+                const s = document.createElement('span');
+                s.className = 'skill-tag';
+                s.textContent = t;
+                tagsEl.appendChild(s);
+            });
+
+            document.getElementById('post-body').innerHTML = marked.parse(markdown);
+        })
+        .catch(function() {
+            document.getElementById('post-title').textContent = 'Post not found';
+            document.getElementById('post-body').innerHTML =
+                '<p>This post could not be loaded. <a href="writing.html">Return to Writing.</a></p>';
+        });
+    </script>
+</body>
+
+</html>

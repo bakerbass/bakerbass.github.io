@@ -1,0 +1,10 @@
+[
+  {
+    "slug": "hello-world",
+    "title": "Hello World",
+    "date": "2026-04-14",
+    "description": "Introductions and ramblings on music, technology and life.",
+    "tags": ["meta", "life"],
+    "draft": false
+  }
+]

@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Writing</title>
+    <title>Writing | Ryan Baker</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
@@ -18,19 +18,59 @@
     <script src="loadnav.js"></script>
 
     <header class="hero">
-        <div class="container">
+        <div class="hero-content text-center">
             <h1>Writing</h1>
-            <p>Articles and Publications</p>
+            <p class="hero-subtitle">Articles &nbsp;&middot;&nbsp; Notes &nbsp;&middot;&nbsp; Research</p>
         </div>
     </header>
 
     <div class="container">
-        <section class="project-card">
-            <div class="project-content">
-                <p>Writing content coming soon...</p>
-            </div>
-        </section>
+        <span class="section-label">Posts</span>
+        <div id="post-grid" class="post-grid"></div>
+        <p id="post-empty" style="display:none; color: var(--text-muted); margin-top: var(--spacing-lg);">
+            No posts yet. Check back soon.
+        </p>
     </div>
+
+    <script>
+        fetch('posts/posts.json')
+            .then(r => r.json())
+            .then(posts => {
+                const grid = document.getElementById('post-grid');
+                const empty = document.getElementById('post-empty');
+                const visible = posts.filter(p => !p.draft);
+
+                if (visible.length === 0) {
+                    empty.style.display = 'block';
+                    return;
+                }
+
+                visible.forEach(post => {
+                    const date = new Date(post.date + 'T00:00:00');
+                    const dateStr = date.toLocaleDateString('en-US', {
+                        year: 'numeric', month: 'long', day: 'numeric'
+                    });
+                    const tags = (post.tags || [])
+                        .map(t => `<span class="skill-tag">${t}</span>`)
+                        .join('');
+
+                    grid.insertAdjacentHTML('beforeend', `
+                        <a class="post-card" href="post.html?slug=${post.slug}">
+                            <div class="post-card-meta">
+                                <span class="post-date">${dateStr}</span>
+                                <div class="skill-tags">${tags}</div>
+                            </div>
+                            <h2 class="post-card-title">${post.title}</h2>
+                            <p class="post-card-desc">${post.description}</p>
+                            <span class="post-card-cta">Read &rarr;</span>
+                        </a>
+                    `);
+                });
+            })
+            .catch(() => {
+                document.getElementById('post-empty').style.display = 'block';
+            });
+    </script>
 </body>
 
 </html>
