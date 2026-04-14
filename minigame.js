@@ -58,9 +58,9 @@ function launchMinigame() {
 }
 
 let audioCtx;
-let distortionNode;
 let convolverNode;
 let masterGain;
+let ladderFilter = null;
 
 function makeDistortionCurve(amount) {
     const k = typeof amount === 'number' ? amount : 50;
@@ -105,15 +105,27 @@ const pentatonicFrequencies = [
 function initAudio() {
     if (!audioCtx) {
         audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-        distortionNode = audioCtx.createWaveShaper();
-        distortionNode.curve = makeDistortionCurve(0);
-        distortionNode.oversample = '4x';
 
         convolverNode = audioCtx.createConvolver();
         convolverNode.buffer = createImpulseResponse(audioCtx);
 
         masterGain = audioCtx.createGain();
-        masterGain.connect(audioCtx.destination);
+
+        // 4-pole ladder filter approximation: 4 cascaded lowpass biquads (24+ dB/oct)
+        // Starts fully open; paddle X controls cutoff in real time
+        ladderFilter = Array.from({ length: 4 }, () => {
+            const f = audioCtx.createBiquadFilter();
+            f.type = 'lowpass';
+            f.frequency.value = 24000; // ~16 kHz perceived after cascade correction
+            f.Q.value = 0.7;
+            return f;
+        });
+        ladderFilter.reduce((prev, curr) => { prev.connect(curr); return curr; });
+        masterGain.connect(ladderFilter[0]);
+        ladderFilter[ladderFilter.length - 1].connect(audioCtx.destination);
+
+        // Connect reverb tail to master once — per-note wetGains feed into this
+        convolverNode.connect(masterGain);
     }
     if (audioCtx.state === 'suspended') {
         audioCtx.resume();
@@ -123,9 +135,13 @@ function initAudio() {
 function playNote(freq, score) {
     if (!audioCtx) return;
 
-    // Distortion builds much slower (5x slower)
-    const intensity = Math.min(score / 500, 1.0);
-    distortionNode.curve = makeDistortionCurve(intensity * 400);
+    const intensity = Math.min(score / 500.0, 1.0);
+
+    // Per-note distortion node — avoids live curve swaps on a shared node
+    // and prevents connection accumulation into masterGain
+    const distortionNode = audioCtx.createWaveShaper();
+    distortionNode.curve = makeDistortionCurve(intensity * 500);
+    distortionNode.oversample = '4x';
 
     const noteDuration = 0.5;
 
@@ -154,13 +170,16 @@ function playNote(freq, score) {
     const envGain = audioCtx.createGain();
     envGain.gain.setValueAtTime(0, audioCtx.currentTime);
 
-    // Scale volume down as distortion intensity goes up to maintain perceived loudness
-    // Assuming distortion + detuned saws add roughly 6 dB of perceived loudness at maximum intensity
-    const dbReduction = 500 * intensity;
-    const peakVolume = 0.15 * Math.pow(10, -dbReduction / 20);
+    // Gentle attenuation to compensate for distortion's harmonic boost (~6dB at full intensity)
+    const peakVolume = 0.15 * (1.0 - intensity * 0.5);
 
+    // Ramp to peak, decay exponentially to near-zero, then a short linear ramp to true 0.
+    // Stopping oscillators while gain != 0 causes a discontinuity (click); the linear tail
+    // ensures gain reaches exactly 0 before the oscillators are silenced.
+    const releaseEnd = audioCtx.currentTime + noteDuration + 0.04;
     envGain.gain.linearRampToValueAtTime(peakVolume, audioCtx.currentTime + 0.05);
-    envGain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + noteDuration);
+    envGain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + noteDuration);
+    envGain.gain.linearRampToValueAtTime(0, releaseEnd);
 
     sineGain.connect(envGain);
     sawGain.connect(envGain);
@@ -171,7 +190,7 @@ function playNote(freq, score) {
     const wetGain = audioCtx.createGain();
 
     let reverbMix = 0;
-    if (score >= 25) {
+    if (score >= 75) {
         reverbMix = Math.min((score - 75) / 25, 1.0) * 0.6;
     }
 
@@ -179,17 +198,18 @@ function playNote(freq, score) {
     wetGain.gain.value = reverbMix;
 
     distortionNode.connect(dryGain);
-    distortionNode.connect(wetGain);
-
-    wetGain.connect(convolverNode);
-    convolverNode.connect(masterGain);
     dryGain.connect(masterGain);
+
+    if (reverbMix > 0) {
+        distortionNode.connect(wetGain);
+        wetGain.connect(convolverNode); // convolverNode → masterGain wired once in initAudio
+    }
 
     sineOsc.start();
     saws.forEach(osc => osc.start());
 
-    sineOsc.stop(audioCtx.currentTime + noteDuration);
-    saws.forEach(osc => osc.stop(audioCtx.currentTime + noteDuration));
+    sineOsc.stop(releaseEnd);
+    saws.forEach(osc => osc.stop(releaseEnd));
 }
 
 function startGame() {
@@ -218,6 +238,15 @@ function startGame() {
         if (x > gameArea.offsetWidth - basket.offsetWidth) x = gameArea.offsetWidth - basket.offsetWidth;
 
         basket.style.left = x + "px";
+
+        if (ladderFilter) {
+            const normalizedX = x / (gameArea.offsetWidth - basket.offsetWidth);
+            // 4 cascaded Butterworth biquads shift the combined -3dB point to ~0.66x the
+            // nominal frequency. Dividing by that factor keeps perceived cutoff accurate.
+            const CASCADE_CORRECTION = 1 / 0.66; // ≈ 1.52
+            const targetCutoff = 200 * Math.pow(80, normalizedX); // 200 Hz → 16 kHz perceived
+            ladderFilter.forEach(f => f.frequency.setTargetAtTime(targetCutoff * CASCADE_CORRECTION, audioCtx.currentTime, 0.02));
+        }
     };
 
     gameArea.addEventListener("mousemove", mouseMoveHandler);
