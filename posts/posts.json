@@ -1,5 +1,13 @@
 [
   {
+    "slug": "schools-out",
+    "title": "School's Out",
+    "date": "2026-05-30",
+    "description": "Reflecting on 2+ years of grad school during the rise of vibe coding",
+    "tags": ["ai", "workflow"],
+    "draft": true
+  },
+  {
     "slug": "hello-world",
     "title": "Hello World",
     "date": "2026-04-14",
