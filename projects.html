@@ -20,7 +20,7 @@
     <header class="hero">
         <div class="hero-content text-center">
             <h1>Projects</h1>
-            <p class="hero-subtitle">Exploring Audio, DSP, and Embedded Systems</p>
+            <p class="hero-subtitle">Exploring Audio, DSP, Embedded Systems and Game Design</p>
         </div>
     </header>
 
@@ -63,7 +63,10 @@
                 </div>`;
         }
 
+        let projectsData = [];
+
         function renderProjects(projects) {
+            projectsData = projects;
             const grid = document.getElementById('project-grid');
             projects.filter(p => !p.draft).forEach(p => {
                 const el = document.createElement(p.action === 'link' ? 'a' : 'article');
@@ -75,6 +78,60 @@
                 }
                 el.innerHTML = cardInnerHTML(p);
                 grid.appendChild(el);
+            });
+        }
+
+        function followThroughHTML(p) {
+            if (p.repo) {
+                return `
+                    <div class="followthrough">
+                        <a class="repo-link-btn" href="${p.repo}" target="_blank" rel="noopener">View Source on GitHub &rarr;</a>
+                    </div>`;
+            }
+            return `
+                <div class="followthrough">
+                    <form class="download-form" data-project="${p.title}">
+                        <h4>Request a Download</h4>
+                        <p class="form-hint">${p.title} isn't public yet &mdash; leave your email and I'll follow up.</p>
+                        <input type="hidden" name="project" value="${p.title}">
+                        <div class="form-row">
+                            <input type="text" name="name" placeholder="Name" required>
+                            <input type="email" name="email" placeholder="Email" required>
+                        </div>
+                        <button type="submit">Request Download</button>
+                        <p class="form-status"></p>
+                    </form>
+                </div>`;
+        }
+
+        function bindDownloadForm(root) {
+            const form = root.querySelector('.download-form');
+            if (!form) return;
+            form.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const btn = form.querySelector('button');
+                const status = form.querySelector('.form-status');
+                btn.disabled = true;
+                status.className = 'form-status';
+                status.textContent = '';
+                fetch('https://formspree.io/f/mjyvvloo', {
+                    method: 'POST',
+                    headers: { 'Accept': 'application/json' },
+                    body: new FormData(form)
+                }).then(r => {
+                    if (r.ok) {
+                        form.reset();
+                        status.className = 'form-status success';
+                        status.textContent = "Thanks! I'll be in touch.";
+                    } else {
+                        throw new Error('submit failed');
+                    }
+                }).catch(() => {
+                    status.className = 'form-status error';
+                    status.textContent = 'Something went wrong — please try again.';
+                }).finally(() => {
+                    btn.disabled = false;
+                });
             });
         }
 
@@ -107,11 +164,13 @@
                 }
                 if (e.target.matches('.read-more-btn[data-slug]')) {
                     const slug = e.target.dataset.slug;
+                    const proj = projectsData.find(p => p.slug === slug);
                     fetch('projects/' + slug + '.md')
                         .then(r => r.text())
                         .then(md => {
                             const cleaned = md.replace(/<!--[\s\S]*?-->/g, '');
-                            modalBody.innerHTML = marked.parse(cleaned);
+                            modalBody.innerHTML = marked.parse(cleaned) + (proj ? followThroughHTML(proj) : '');
+                            bindDownloadForm(modalBody);
                             modal.classList.add('active');
                             document.body.style.overflow = 'hidden'; // Prevent background scrolling
                         });

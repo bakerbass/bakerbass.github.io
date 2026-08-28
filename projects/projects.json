@@ -9,17 +9,27 @@
   },
   {
     "slug": "guitarbot",
-    "title": "GuitarBot Jams",
+    "title": "GuitarBot Jams / GuitaRL",
     "image": "assets/guitarbot.png",
-    "description": "A backend for interactive improvisation with Georgia Tech's robotic guitarist.",
+    "description": "An audio-aware interactive robotic guitarist.",
     "cta": "Read More",
-    "action": "modal"
+    "action": "modal",
+    "repo": "https://github.com/GuitarBotGatech/GuitarBot"
+  },
+  {
+    "slug": "hearsal",
+    "title": "hearsal",
+    "image": "assets/hearsal.png",
+    "description": "A collaborative setlist app that allows users to import chords and lyrics for a seamless practice environment.",
+    "cta": "Try now",
+    "action": "link",
+    "url": "https://hearsal.vercel.app"
   },
   {
     "slug": "ravel",
     "title": "Ravel",
     "image": "assets/ravel.png",
-    "description": "A RAVE-powered neural audio looper plugin, with torch isolated in a flat-C-ABI DLL for streaming parity.",
+    "description": "A RAVE-powered neural audio looper that turns your loops into something new.",
     "cta": "Read More",
     "action": "modal"
   },
@@ -27,25 +37,16 @@
     "slug": "decibel-drifter",
     "title": "dB Drifter",
     "image": "assets/decibel-drifter.png",
-    "description": "An audiophile roguelite/driving game where sound literally powers your weapons and gear.",
+    "description": "A chipeo inspired roguelite/driving game where sound literally powers your weapons and gear.",
     "cta": "Play now",
     "action": "game",
     "game": "games/decibel-drifter/index.html"
   },
   {
-    "slug": "hearsal",
-    "title": "hearsal",
-    "image": "assets/hearsal.png",
-    "description": "A Next.js setlist app that pulls charts from Ultimate Guitar and playlists from Spotify, now with offline/PWA support.",
-    "cta": "Try now",
-    "action": "link",
-    "url": "https://hearsal.vercel.app"
-  },
-  {
     "slug": "boing",
     "title": "Boing",
     "image": "assets/boing.png",
-    "description": "A spring-reverb plugin whose character comes from real fluid-loading physics, not a preset bank.",
+    "description": "A spring-reverb plugin whose character comes from real fluid-loading physics.",
     "cta": "Read More",
     "action": "modal"
   },
@@ -53,7 +54,7 @@
     "slug": "jpegify",
     "title": "jpegify",
     "image": "assets/jpegify.png",
-    "description": "A bit-crusher where a dropped-in image's own JPEG blocks decide what the audio quantizer keeps or kills.",
+    "description": "An image-based bit-crusher where the dropped-in image's JPEG data directly controls audio.",
     "cta": "Read More",
     "action": "modal"
   },
@@ -69,7 +70,7 @@
     "slug": "looprouter",
     "title": "LoopRouter",
     "image": "assets/looprouter.png",
-    "description": "A live looper VST/AU with a 4×8 send matrix and full OSC remote control, now standalone.",
+    "description": "A live looper VST/AU with a 4×8 send matrix and full OSC remote control.",
     "cta": "Read More",
     "action": "modal"
   }
