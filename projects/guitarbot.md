@@ -13,9 +13,10 @@ GuitaRL is part of ongoing research at Georgia Tech, and the results are still u
 
 ## The Sequencer
 
-To help composers make music tailored for the robot, I built a browser-based MIDI workstation from scratch. The UI features string assignments, pluck speed, and fret sliding. 
-Prior to this UI, the main method of composing music was by creating messages directly in python.
-This new design takes advantage of mental models musicians already have regarding computer music composition: copy and paste, saving songs as MIDI or a custom JSON format, and hearing the composition using a Karplus-Strong guitar synthesizer with time-accurate tremolo playback, enabling 1-1
+To help composers make music tailored for the robot, I built a browser-based workstation from scratch. The UI features string assignments, pluck speed, and fret sliding. 
+Prior to this UI, the main method of composing music for the bot was by creating raw OSC messages directly in Python.
+
+This new design takes advantage of mental models composers are already familiar with such as copy and paste and saving songs as MIDI files. To reduce wear on the robot, the UI also enables the composition to be synthesized using a Karplus-Strong guitar algorithm with time-accurate tremolo playback, enabling precise feedback on compositions whether you're in the lab or at home.
 
 ![GuitarBot Sequencer UI](assets/guitarbot-sequencer.png)
 
