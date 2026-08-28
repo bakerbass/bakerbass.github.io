@@ -5,7 +5,8 @@
     "image": "assets/Vkn_juce.png",
     "description": "A collection of VST plugins developed for the AES MATLAB Hackathons, including a compressor, reverb, and a vocal processor.",
     "cta": "Read More",
-    "action": "modal"
+    "action": "modal",
+    "repo": "https://github.com/bakerbass/Suite-Talk"
   },
   {
     "slug": "guitarbot",
@@ -37,7 +38,7 @@
     "slug": "decibel-drifter",
     "title": "dB Drifter",
     "image": "assets/decibel-drifter.png",
-    "description": "A chipeo inspired roguelite/driving game where sound literally powers your weapons and gear.",
+    "description": "A chipeo inspired roguelite/driving game where sound powers your weapons and gear.",
     "cta": "Play now",
     "action": "game",
     "game": "games/decibel-drifter/index.html"
