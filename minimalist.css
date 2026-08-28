@@ -717,7 +717,7 @@ a:hover {
 }
 
 .modal-body img {
-    width: 50%;
+    width: 100%;
     height: auto;
     border-radius: var(--radius);
     margin-bottom: var(--spacing-md);
