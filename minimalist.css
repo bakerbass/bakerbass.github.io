@@ -783,7 +783,7 @@ a:hover {
 .game-close-btn {
     position: fixed;
     top: 18px;
-    right: 22px;
+    left: 22px;
     z-index: 1001;
     width: 44px;
     height: 44px;
