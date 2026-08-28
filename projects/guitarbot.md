@@ -11,4 +11,10 @@ This allowed for event-time diagnostics using music information retrieval (MIR),
 
 GuitaRL is part of ongoing research at Georgia Tech, and the results are still unpublished at this time. Though, the system shows promise to create a new framework for audio-aware musical robotics.
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/U_UtvMRulFA?si=F8pNP75sxm3YGVI0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+## The Sequencer
+
+To actually get music onto the robot, I built a browser-based MIDI workstation from scratch, tailored specifically to GuitarBot's mechanical capabilities — string and fret layout, pluck speed, slide behavior — so every note placed in the editor is something the robot can physically play before it's ever uploaded.
+
+![GuitarBot Sequencer UI](assets/guitarbot-sequencer.png)
+
+Want to hear it in action? Check out [the performance on my Music page](music.html).
