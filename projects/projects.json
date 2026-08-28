@@ -1,0 +1,76 @@
+[
+  {
+    "slug": "audio-plugins",
+    "title": "Award Winning Audio Plugins",
+    "image": "assets/Vkn_juce.png",
+    "description": "A collection of VST plugins developed for the AES MATLAB Hackathons, including a compressor, reverb, and a vocal processor.",
+    "cta": "Read More",
+    "action": "modal"
+  },
+  {
+    "slug": "guitarbot",
+    "title": "GuitarBot Jams",
+    "image": "assets/guitarbot.png",
+    "description": "A backend for interactive improvisation with Georgia Tech's robotic guitarist.",
+    "cta": "Read More",
+    "action": "modal"
+  },
+  {
+    "slug": "ravel",
+    "title": "Ravel",
+    "image": "assets/ravel.png",
+    "description": "A RAVE-powered neural audio looper plugin, with torch isolated in a flat-C-ABI DLL for streaming parity.",
+    "cta": "Read More",
+    "action": "modal"
+  },
+  {
+    "slug": "decibel-drifter",
+    "title": "dB Drifter",
+    "image": "assets/decibel-drifter.png",
+    "description": "An audiophile roguelite/driving game where sound literally powers your weapons and gear.",
+    "cta": "Play now",
+    "action": "game",
+    "game": "games/decibel-drifter/index.html"
+  },
+  {
+    "slug": "hearsal",
+    "title": "hearsal",
+    "image": "assets/hearsal.png",
+    "description": "A Next.js setlist app that pulls charts from Ultimate Guitar and playlists from Spotify, now with offline/PWA support.",
+    "cta": "Try now",
+    "action": "link",
+    "url": "https://hearsal.vercel.app"
+  },
+  {
+    "slug": "boing",
+    "title": "Boing",
+    "image": "assets/boing.png",
+    "description": "A spring-reverb plugin whose character comes from real fluid-loading physics, not a preset bank.",
+    "cta": "Read More",
+    "action": "modal"
+  },
+  {
+    "slug": "jpegify",
+    "title": "jpegify",
+    "image": "assets/jpegify.png",
+    "description": "A bit-crusher where a dropped-in image's own JPEG blocks decide what the audio quantizer keeps or kills.",
+    "cta": "Read More",
+    "action": "modal"
+  },
+  {
+    "slug": "nuker",
+    "title": "Nuker",
+    "image": "assets/nuker.png",
+    "description": "A microwave-themed destruction effect: gamma-ray distortion, pumping compression, and cooking-appliance foley.",
+    "cta": "Read More",
+    "action": "modal"
+  },
+  {
+    "slug": "looprouter",
+    "title": "LoopRouter",
+    "image": "assets/looprouter.png",
+    "description": "A live looper VST/AU with a 4×8 send matrix and full OSC remote control, now standalone.",
+    "cta": "Read More",
+    "action": "modal"
+  }
+]
