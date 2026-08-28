@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DECIBEL DRIFTER</title>
+  <script>
+    window.__errs = [];
+    window.addEventListener('error', (e) => window.__errs.push(`${e.message} @ ${e.filename}:${e.lineno}`));
+    window.addEventListener('unhandledrejection', (e) => window.__errs.push(String(e.reason)));
+  </script>
+  <style>
+    :root {
+      --neon-pink: #ff2d78;
+      --neon-cyan: #23e8d8;
+      --neon-yellow: #ffd23e;
+      --neon-purple: #9d5cff;
+      --bg-dark: #0b0716;
+      --panel: rgba(16, 10, 34, 0.92);
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; user-select: none; }
+    html, body { width: 100%; height: 100%; overflow: hidden; background: var(--bg-dark); }
+    body { font-family: 'Segoe UI', system-ui, sans-serif; color: #eee; }
+    #app { position: fixed; inset: 0; }
+    canvas { display: block; }
+
+    .overlay {
+      position: fixed; inset: 0; display: flex; flex-direction: column;
+      align-items: center; justify-content: center; z-index: 10;
+      background: radial-gradient(ellipse at center, rgba(11,7,22,0.55) 0%, rgba(11,7,22,0.92) 100%);
+      transition: opacity 0.35s ease;
+    }
+    .overlay.hidden { opacity: 0; pointer-events: none; }
+
+    .title {
+      font-size: clamp(42px, 8vw, 96px); font-weight: 900; letter-spacing: 0.08em;
+      background: linear-gradient(90deg, var(--neon-pink), var(--neon-purple), var(--neon-cyan));
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+      text-shadow: 0 0 40px rgba(157, 92, 255, 0.35);
+      animation: titlepulse 2.2s ease-in-out infinite;
+    }
+    @keyframes titlepulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.025); } }
+    .subtitle { margin-top: 8px; font-size: clamp(13px, 2vw, 18px); color: var(--neon-cyan); letter-spacing: 0.35em; text-transform: uppercase; }
+    .tagline { margin-top: 22px; max-width: 520px; text-align: center; color: #b9b3cc; line-height: 1.6; font-size: 15px; }
+
+    .btn {
+      margin-top: 34px; padding: 16px 54px; font-size: 20px; font-weight: 800; letter-spacing: 0.15em;
+      color: #0b0716; background: linear-gradient(90deg, var(--neon-pink), var(--neon-purple));
+      border: none; border-radius: 999px; cursor: pointer;
+      box-shadow: 0 0 28px rgba(255, 45, 120, 0.55);
+      transition: transform 0.12s ease, box-shadow 0.12s ease;
+    }
+    .btn:hover { transform: scale(1.06); box-shadow: 0 0 44px rgba(255, 45, 120, 0.85); }
+    .btn.cyan { background: linear-gradient(90deg, var(--neon-cyan), var(--neon-purple)); box-shadow: 0 0 28px rgba(35, 232, 216, 0.5); }
+
+    .controls-hint { margin-top: 30px; display: flex; gap: 28px; color: #8f88a8; font-size: 13px; }
+    .controls-hint b { color: #fff; background: #241a44; border-radius: 6px; padding: 2px 9px; margin-right: 6px; font-size: 12px; border: 1px solid #453474; }
+
+    /* HUD */
+    #hud { position: fixed; inset: 0; pointer-events: none; z-index: 5; display: none; }
+    #hud.active { display: block; }
+    .hud-top { position: absolute; top: 18px; left: 50%; transform: translateX(-50%); text-align: center; }
+    #wave-label { font-size: 15px; letter-spacing: 0.4em; color: var(--neon-cyan); text-transform: uppercase; }
+    #biome-label { margin-top: 4px; font-size: 11px; letter-spacing: 0.5em; color: #8f88a8; text-transform: uppercase; }
+    #toast {
+      position: absolute; top: 22%; left: 50%; transform: translateX(-50%);
+      font-size: 20px; font-weight: 800; letter-spacing: 0.18em;
+      text-shadow: 0 0 18px currentColor; opacity: 0; transition: opacity 0.3s ease;
+    }
+    #toast.show { opacity: 1; }
+
+    /* Crossover band mixer */
+    #xover {
+      position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%);
+      display: flex; gap: 14px; align-items: flex-end;
+      background: rgba(16, 10, 34, 0.55); border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 12px; padding: 10px 14px 8px;
+    }
+    .xo-band { display: flex; flex-direction: column; align-items: center; gap: 4px; width: 44px; }
+    .xo-slider { height: 64px; width: 12px; background: rgba(255,255,255,0.08); border-radius: 6px; overflow: hidden; display: flex; align-items: flex-end; border: 1px solid rgba(255,255,255,0.12); }
+    .xo-fill { width: 100%; border-radius: 6px; transition: height 0.15s ease; }
+    #xo-low-fill { background: linear-gradient(0deg, #ff2d5e, #ff7a2d); }
+    #xo-mid-fill { background: linear-gradient(0deg, #b13bcc, #ff2d78); }
+    #xo-high-fill { background: linear-gradient(0deg, #23a8e8, #23e8d8); }
+    .xo-label { font-size: 9px; letter-spacing: 0.15em; color: #8f88a8; }
+    .xo-label b { color: #fff; }
+    .xo-pct { font-size: 11px; font-weight: 700; color: #ddd; }
+
+    /* Chop shop */
+    #shop-bank { margin-top: 10px; font-size: 15px; letter-spacing: 0.2em; color: #b9b3cc; }
+    #shop-bank b { color: var(--neon-yellow); font-size: 20px; }
+    .upgrade-card .price { display: inline-block; margin-top: 10px; padding: 3px 14px; border-radius: 999px; font-size: 13px; font-weight: 800; color: #0b0716; background: var(--neon-yellow); }
+    .upgrade-card.cosmetic-item .icon { filter: drop-shadow(0 0 10px rgba(255,210,62,0.7)); }
+    .upgrade-card.unaffordable { opacity: 0.45; cursor: not-allowed; }
+    .upgrade-card.unaffordable:hover { transform: none; box-shadow: none; }
+    .upgrade-card.sold { opacity: 0.35; cursor: default; }
+    .upgrade-card.sold:hover { transform: none; box-shadow: none; }
+    .upgrade-card.sold .price { background: #666; content: 'SOLD'; }
+    #wave-banner {
+      position: absolute; top: 34%; left: 50%; transform: translate(-50%, -50%);
+      font-size: 54px; font-weight: 900; letter-spacing: 0.2em; color: #fff;
+      text-shadow: 0 0 30px var(--neon-purple); opacity: 0; pointer-events: none;
+      transition: opacity 0.4s ease, transform 0.4s ease;
+    }
+    #wave-banner.show { opacity: 1; transform: translate(-50%, -60%); }
+
+    .hud-bl { position: absolute; left: 22px; bottom: 20px; width: 280px; }
+    .bar-label { font-size: 11px; letter-spacing: 0.25em; color: #8f88a8; margin-bottom: 5px; text-transform: uppercase; display: flex; justify-content: space-between; }
+    .bar { height: 14px; background: rgba(255,255,255,0.08); border-radius: 999px; overflow: hidden; border: 1px solid rgba(255,255,255,0.12); }
+    .bar-fill { height: 100%; border-radius: 999px; transition: width 0.18s ease; }
+    #hp-fill { background: linear-gradient(90deg, #ff2d5e, #ff7a2d); width: 100%; }
+    #drop-fill { background: linear-gradient(90deg, var(--neon-cyan), var(--neon-purple)); width: 0%; }
+    #drop-row.ready #drop-fill { animation: dropready 0.9s ease-in-out infinite; }
+    @keyframes dropready { 0%,100% { filter: brightness(1); } 50% { filter: brightness(1.7); } }
+
+    .hud-br { position: absolute; right: 22px; bottom: 20px; text-align: right; }
+    #score { font-size: 30px; font-weight: 800; color: var(--neon-yellow); text-shadow: 0 0 14px rgba(255, 210, 62, 0.5); }
+    #combo { font-size: 14px; color: var(--neon-pink); font-weight: 700; height: 18px; }
+    #stats-mini { margin-top: 6px; font-size: 11px; color: #8f88a8; letter-spacing: 0.06em; line-height: 1.7; }
+
+    /* Upgrade screen */
+    #upgrade-overlay .cards { display: flex; gap: 22px; margin-top: 30px; flex-wrap: wrap; justify-content: center; }
+    #shop-overlay .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+      width: min(1180px, 92vw);
+      max-height: min(68vh, 760px);
+      overflow: auto;
+      padding: 8px 10px 14px;
+      margin-top: 28px;
+      align-items: start;
+    }
+    #shop-overlay .upgrade-card { width: auto; }
+    .upgrade-card {
+      width: 232px; padding: 24px 20px 20px; background: var(--panel); border-radius: 16px;
+      border: 2px solid rgba(255,255,255,0.1); cursor: pointer; text-align: center;
+      transition: transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+    }
+    .upgrade-card:hover { transform: translateY(-8px) scale(1.03); }
+    .upgrade-card .icon { font-size: 44px; }
+    .upgrade-card h3 { margin: 12px 0 4px; font-size: 17px; letter-spacing: 0.04em; }
+    .upgrade-card .tier { font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 10px; font-weight: 700; }
+    .upgrade-card p { font-size: 13px; color: #b9b3cc; line-height: 1.55; }
+    .upgrade-card.rarity-common { border-color: rgba(160,160,190,0.5); } .upgrade-card.rarity-common:hover { box-shadow: 0 0 26px rgba(160,160,190,0.35); }
+    .upgrade-card.rarity-rare { border-color: var(--neon-cyan); } .upgrade-card.rarity-rare:hover { box-shadow: 0 0 26px rgba(35,232,216,0.4); }
+    .upgrade-card.rarity-epic { border-color: var(--neon-purple); } .upgrade-card.rarity-epic:hover { box-shadow: 0 0 30px rgba(157,92,255,0.5); }
+    .upgrade-card.rarity-legendary { border-color: var(--neon-yellow); } .upgrade-card.rarity-legendary:hover { box-shadow: 0 0 34px rgba(255,210,62,0.55); }
+    .rarity-common .tier { color: #a0a0be; } .rarity-rare .tier { color: var(--neon-cyan); }
+    .rarity-epic .tier { color: var(--neon-purple); } .rarity-legendary .tier { color: var(--neon-yellow); }
+
+    .overlay h2 { font-size: 34px; font-weight: 900; letter-spacing: 0.1em; }
+    .overlay h2.grad { background: linear-gradient(90deg, var(--neon-cyan), var(--neon-purple)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    #gameover-stats { margin-top: 18px; text-align: center; color: #b9b3cc; line-height: 2; font-size: 15px; }
+    #gameover-stats b { color: var(--neon-yellow); font-size: 18px; }
+
+    #mute-btn {
+      position: fixed; top: 16px; right: 18px; z-index: 20; pointer-events: auto;
+      background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.15); color: #ddd;
+      border-radius: 10px; padding: 7px 12px; cursor: pointer; font-size: 16px;
+    }
+    #vignette { position: fixed; inset: 0; pointer-events: none; z-index: 4; box-shadow: inset 0 0 180px rgba(0,0,0,0.55); }
+    #damage-flash { position: fixed; inset: 0; pointer-events: none; z-index: 6; background: radial-gradient(ellipse at center, transparent 40%, rgba(255,30,60,0.45) 100%); opacity: 0; transition: opacity 0.35s ease; }
+  </style>
+  <script type="module" crossorigin src="./assets/index-KUIrC6TH.js"></script>
+</head>
+<body>
+  <div id="app"></div>
+  <div id="vignette"></div>
+  <div id="damage-flash"></div>
+  <button id="mute-btn" title="Toggle sound">🔊</button>
+
+  <div id="hud">
+    <div class="hud-top">
+      <div id="wave-label">Wave 1</div>
+      <div id="biome-label"></div>
+    </div>
+    <div id="toast"></div>
+    <div id="wave-banner">WAVE 1</div>
+    <div class="hud-bl">
+      <div class="bar-label"><span>Chassis Integrity</span><span id="hp-num">100</span></div>
+      <div class="bar"><div class="bar-fill" id="hp-fill"></div></div>
+      <div style="height:10px"></div>
+      <div id="drop-row">
+        <div class="bar-label"><span>Bass Drop [E / RMB]</span><span id="drop-num">0%</span></div>
+        <div class="bar"><div class="bar-fill" id="drop-fill"></div></div>
+      </div>
+    </div>
+    <div id="xover" title="Crossover: route signal between bands with 1 / 2 / 3">
+      <div class="xo-band">
+        <div class="xo-slider"><div class="xo-fill" id="xo-low-fill" style="height:34%"></div></div>
+        <span class="xo-pct" id="xo-low-pct">34</span>
+        <span class="xo-label"><b>1</b> LOW</span>
+      </div>
+      <div class="xo-band">
+        <div class="xo-slider"><div class="xo-fill" id="xo-mid-fill" style="height:33%"></div></div>
+        <span class="xo-pct" id="xo-mid-pct">33</span>
+        <span class="xo-label"><b>2</b> MID</span>
+      </div>
+      <div class="xo-band">
+        <div class="xo-slider"><div class="xo-fill" id="xo-high-fill" style="height:33%"></div></div>
+        <span class="xo-pct" id="xo-high-pct">33</span>
+        <span class="xo-label"><b>3</b> HIGH</span>
+      </div>
+    </div>
+    <div class="hud-br">
+      <div id="score">0</div>
+      <div id="combo"></div>
+      <div id="stats-mini"></div>
+    </div>
+  </div>
+
+  <div id="title-overlay" class="overlay">
+    <div class="title">DECIBEL DRIFTER</div>
+    <div class="subtitle">Turn it up. Or die quiet.</div>
+    <p class="tagline">The static horde is closing in, and your only weapon is the meanest car audio system ever bolted to a chassis. Aim your speakers, drop the bass, and upgrade your rig between waves.</p>
+    <button class="btn" id="start-btn">START ENGINE</button>
+    <div class="controls-hint">
+      <span><b>WASD</b>Drive</span>
+      <span><b>MOUSE</b>Aim speakers</span>
+      <span><b>SPACE</b>Jump</span>
+      <span><b>E / RMB</b>Bass drop</span>
+      <span><b>1 2 3</b>Route signal</span>
+      <span><b>M</b>Mute</span>
+    </div>
+  </div>
+
+  <div id="upgrade-overlay" class="overlay hidden">
+    <h2 class="grad">WAVE CLEARED — PICK AN UPGRADE</h2>
+    <div class="cards" id="upgrade-cards"></div>
+  </div>
+
+  <div id="shop-overlay" class="overlay hidden">
+    <h2 class="grad">🛠️ THE CHOP SHOP</h2>
+    <div id="shop-bank">BANK: <b id="shop-score">0</b> PTS</div>
+    <div class="cards" id="shop-cards"></div>
+    <button class="btn cyan" id="shop-leave-btn" style="margin-top:26px">PEEL OUT</button>
+  </div>
+
+  <div id="gameover-overlay" class="overlay hidden">
+    <h2 style="color: var(--neon-pink); text-shadow: 0 0 30px rgba(255,45,120,0.6);">SIGNAL LOST</h2>
+    <div id="gameover-stats"></div>
+    <button class="btn cyan" id="restart-btn">REBOOT THE RIG</button>
+  </div>
+
+</body>
+</html>

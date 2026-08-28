@@ -20,140 +20,12 @@
     <header class="hero">
         <div class="hero-content text-center">
             <h1>Projects</h1>
-            <p class="hero-subtitle">Exploring Audio, DSP, and Embedded Systems</p>
+            <p class="hero-subtitle">Exploring Audio, DSP, Embedded Systems and Game Design</p>
         </div>
     </header>
 
     <div class="container">
-        <div class="project-grid">
-
-            <!-- Audio Plugins (Grouped) -->
-            <article class="project-card-short">
-                <img src="assets/Vkn_juce.png" alt="Audio Plugins">
-                <div class="content">
-                    <h3>Award Winning Audio Plugins</h3>
-                    <p>
-                        A collection of VST plugins developed for the AES MATLAB Hackathons, including a compressor,
-                        reverb, and a vocal processor.
-                    </p>
-                    <button class="read-more-btn">Read More</button>
-
-                    <!-- Hidden Full Content -->
-                    <div class="full-content" style="display: none;">
-                        <h2>Suite Talk</h2>
-                        <img src="assets/suitetalk.png" alt="Suite Talk Interface">
-                        <p><strong>Challenge: AES MATLAB Hackathon 2025</strong></p>
-                        <p>In 28 hours, develop a VST in MATLAB that helps podcasters achieve a professional sound
-                            quality, while removing background noise. Combine Voice Activity Detection (VAD), A.I. and
-                            traditional DSP to provide a quality audio output with an easy-to-use interface.</p>
-                        <p><strong>Solution: Suite Talk – Gold Prize Winner</strong></p>
-                        <ul>
-                            <li><strong>A.I. Speech Enhancement</strong> – Remove non-speech noise using MetricGAN model
-                            </li>
-                            <li><strong>VAD / Gate</strong> – Detect speech in a signal, and open a noise gate so
-                                extraneous noise is reduced</li>
-                            <li><strong>Dynamic EQ and hum reducer</strong> – Reduce 60Hz hum and handle common speech
-                                EQ in the background</li>
-                        </ul>
-
-                        <hr style="margin: 2rem 0; border: 0; border-top: 1px solid #eee;">
-
-                        <h2>Chorus Verb</h2>
-                        <img src="assets/chorus-verb.png" alt="Chorus Verb Interface">
-                        <p><strong>Challenge: AES MATLAB Hackathon 2024</strong></p>
-                        <p>Complete a reverb plugin using provided helper filters (comb, all-pass, high shelving) and
-                            block diagrams. The first challenge was to finish the main processing block.</p>
-                        <p><strong>Solution: Chorus Verb – First Place Winner</strong></p>
-                        <ul>
-                            <li><strong>Chorus Effect</strong> – Adds modulation and depth to the reverb tail</li>
-                            <li><strong>Haas Effect (Wideness)</strong> – Creates a wider stereo image</li>
-                            <li><strong>Reflection Control</strong> – Increases signal of reflections/diffusions for
-                                better decay control</li>
-                        </ul>
-                        <p>The final challenge was to measure the performance of the reverb plugin, including some
-                            preset designs.</p>
-                        <p>
-                            After completing the challenge, the plugin was calibrated by measuring the RT60 of the
-                            impulse response and creating a lookup table for the decay time.
-                        </p>
-                        <hr style="margin: 2rem 0; border: 0; border-top: 1px solid #eee;">
-
-                        <h2>V-Kn Comp</h2>
-                        <img src="assets/vkn-comp.png" alt="V-Kn Comp Interface">
-                        <p><strong>Challenge: AES MATLAB Hackathon 2023</strong></p>
-                        <p>Implement a dynamics compressor plugin.</p>
-                        <p><strong>Solution: V-Kn Comp – First Place Winner</strong></p>
-                        <ul>
-                            <li><strong>Variable knee compression</strong> – Smooth transition between uncompressed and
-                                compressed signals</li>
-                            <li><strong>Input/Output gain staging</strong> – Precise level control</li>
-                            <li><strong>Saturation module</strong> – Adds harmonic character</li>
-                            <li><strong>Real-time metering</strong> – Visual feedback for gain reduction</li>
-                        </ul>
-                    </div>
-                </div>
-            </article>
-
-            <!-- SmartPick -->
-            <article class="project-card-short">
-                <img src="assets/smartpick.jpg" alt="SmartPick Device">
-                <div class="content">
-                    <h3>SmartPick</h3>
-                    <p>A MIDI-enabled guitar pick built on the Teensy 4.0 platform for enhanced musical expression.</p>
-                    <button class="read-more-btn">Read More</button>
-
-                    <!-- Hidden Full Content -->
-                    <div class="full-content" style="display: none;">
-                        <h2>SmartPick</h2>
-                        <img src="assets/smartpick.jpg" alt="SmartPick Device">
-                        <p>SmartPick is a project aimed to increase musical expression for guitarists, built on the
-                            Teensy
-                            4.0 development platform. Force sensor data was converted into MIDI control messages which
-                            communicate with a custom effects plugin. The effects plugin utilized a modulated biquad
-                            lowpass
-                            filter and an amplitude modulator that would react based on the force sensor's readings.</p>
-                        <p>This project was developed by Ryan for his undergraduate capstone project, as well as a full
-                            design document detailing each step in the process.</p>
-                    </div>
-                </div>
-            </article>
-
-            <!-- GuitarBot -->
-            <article class="project-card-short">
-                <!-- Placeholder image for now since one wasn't explicitly provided, using a generic tech/code placeholder or just the video thumbnail if I could fetch it. I'll use a generic placeholder or just omit the image in the short card if I don't have one. 
-                     Actually, I'll use the YouTube thumbnail if I can guess it, but safe bet is to use a placeholder or just no image. 
-                     Wait, the user wants an image. I'll use the vkn-comp one as a placeholder or maybe I can use a generic one. 
-                     Let's use a placeholder from the assets if available. I see 'extract_assets...' in artifacts. 
-                     I'll just use the YouTube embed in the full content and maybe no image in the short card for now, or reuse one. 
-                     Actually, I'll use a solid color div or just the text. 
-                     User said "have a short paragraph and an image". 
-                     I will use the 'combosynth.png' as a placeholder for now and let the user know. -->
-                <img src="assets/guitarbot.png" alt="GuitarBot">
-                <div class="content">
-                    <h3>GuitarBot Jams</h3>
-                    <p>A backend for interactive improvisation with Georgia Tech's robotic guitarist.</p>
-                    <button class="read-more-btn">Read More</button>
-
-                    <!-- Hidden Full Content -->
-                    <div class="full-content" style="display: none;">
-                        <h2>GuitarBot Jams</h2>
-                        <p>GuitarBot is a robotic guitarist at Georgia Tech's Robotic Musicianship
-                            laboratory. Upon joining the lab, Ryan Baker was instantly drawn to the
-                            project.</p>
-                        <p>However, there was no way to interactively play along with GuitarBot yet.
-                            Baker developed a backend that allowed a user to play audio into a DAW,
-                            which is then automatically transcribed into chord information for GuitarBot
-                            to improvise over. This is part of ongoing research at Georgia Tech.</p>
-                        <iframe width="560" height="315"
-                            src="https://www.youtube.com/embed/U_UtvMRulFA?si=F8pNP75sxm3YGVI0"
-                            title="YouTube video player" frameborder="0"
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                            allowfullscreen></iframe>
-                    </div>
-                </div>
-            </article>
-
-        </div>
+        <div class="project-grid" id="project-grid"></div>
     </div>
 
     <!-- Modal Structure -->
@@ -166,26 +38,149 @@
         </div>
     </div>
 
+    <!-- Fullscreen Game Overlay -->
+    <div class="game-fullscreen-overlay" id="gameFullscreenOverlay">
+        <button class="game-close-btn" id="gameCloseBtn" aria-label="Close game" title="Close">&times;</button>
+        <iframe id="gameFrame" src="" title="Playable game" allow="autoplay"></iframe>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/4.3.0/marked.min.js"></script>
     <script>
+        marked.setOptions({ gfm: true, breaks: false });
+
+        function cardInnerHTML(p) {
+            const btn = p.action === 'game'
+                ? `<button class="play-game-btn" data-game="${p.game}">${p.cta}</button>`
+                : p.action === 'link'
+                    ? `<span class="read-more-btn">${p.cta}</span>`
+                    : `<button class="read-more-btn" data-slug="${p.slug}">${p.cta}</button>`;
+            return `
+                <img src="${p.image}" alt="${p.title}">
+                <div class="content">
+                    <h3>${p.title}</h3>
+                    <p>${p.description}</p>
+                    ${btn}
+                </div>`;
+        }
+
+        let projectsData = [];
+
+        function renderProjects(projects) {
+            projectsData = projects;
+            const grid = document.getElementById('project-grid');
+            projects.filter(p => !p.draft).forEach(p => {
+                const el = document.createElement(p.action === 'link' ? 'a' : 'article');
+                el.className = 'project-card-short';
+                if (p.action === 'link') {
+                    el.href = p.url;
+                    el.target = '_blank';
+                    el.rel = 'noopener';
+                }
+                el.innerHTML = cardInnerHTML(p);
+                grid.appendChild(el);
+            });
+        }
+
+        function followThroughHTML(p) {
+            if (p.repo) {
+                return `
+                    <div class="followthrough">
+                        <a class="repo-link-btn" href="${p.repo}" target="_blank" rel="noopener">View Source on GitHub &rarr;</a>
+                    </div>`;
+            }
+            return `
+                <div class="followthrough">
+                    <form class="download-form" data-project="${p.title}">
+                        <h4>Request a Download</h4>
+                        <p class="form-hint">${p.title} isn't public yet. Drop your email and I'll follow up!</p>
+                        <input type="hidden" name="project" value="${p.title}">
+                        <div class="form-row">
+                            <input type="text" name="name" placeholder="Name" required>
+                            <input type="email" name="email" placeholder="Email" required>
+                        </div>
+                        <button type="submit">Request Download</button>
+                        <p class="form-status"></p>
+                    </form>
+                </div>`;
+        }
+
+        function bindDownloadForm(root) {
+            const form = root.querySelector('.download-form');
+            if (!form) return;
+            form.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const btn = form.querySelector('button');
+                const status = form.querySelector('.form-status');
+                btn.disabled = true;
+                status.className = 'form-status';
+                status.textContent = '';
+                fetch('https://formspree.io/f/mjyvvloo', {
+                    method: 'POST',
+                    headers: { 'Accept': 'application/json' },
+                    body: new FormData(form)
+                }).then(r => {
+                    if (r.ok) {
+                        form.reset();
+                        status.className = 'form-status success';
+                        status.textContent = "Thanks! I'll be in touch.";
+                    } else {
+                        throw new Error('submit failed');
+                    }
+                }).catch(() => {
+                    status.className = 'form-status error';
+                    status.textContent = 'Something went wrong — please try again.';
+                }).finally(() => {
+                    btn.disabled = false;
+                });
+            });
+        }
+
         document.addEventListener('DOMContentLoaded', () => {
             const modal = document.getElementById('projectModal');
             const modalBody = modal.querySelector('.modal-body');
             const closeBtn = modal.querySelector('.close-modal');
 
-            // Event Delegation for Open Modal
+            const gameOverlay = document.getElementById('gameFullscreenOverlay');
+            const gameFrame = document.getElementById('gameFrame');
+            const gameCloseBtn = document.getElementById('gameCloseBtn');
+
+            fetch('projects/projects.json')
+                .then(r => r.json())
+                .then(renderProjects);
+
+            const closeGame = () => {
+                gameOverlay.classList.remove('active');
+                gameFrame.src = 'about:blank'; // stop gameplay/audio when closed
+                document.body.style.overflow = '';
+            };
+
+            // Event Delegation for Open Modal / Play Game
             document.addEventListener('click', (e) => {
-                if (e.target.matches('.read-more-btn')) {
-                    const btn = e.target;
-                    const card = btn.closest('.project-card-short');
-                    if (card) {
-                        const fullContentDiv = card.querySelector('.full-content');
-                        if (fullContentDiv) {
-                            const fullContent = fullContentDiv.innerHTML;
-                            modalBody.innerHTML = fullContent;
+                if (e.target.matches('.play-game-btn')) {
+                    gameFrame.src = e.target.dataset.game;
+                    gameOverlay.classList.add('active');
+                    document.body.style.overflow = 'hidden';
+                    return;
+                }
+                if (e.target.matches('.read-more-btn[data-slug]')) {
+                    const slug = e.target.dataset.slug;
+                    const proj = projectsData.find(p => p.slug === slug);
+                    fetch('projects/' + slug + '.md')
+                        .then(r => r.text())
+                        .then(md => {
+                            const cleaned = md.replace(/<!--[\s\S]*?-->/g, '');
+                            modalBody.innerHTML = marked.parse(cleaned) + (proj ? followThroughHTML(proj) : '');
+                            bindDownloadForm(modalBody);
                             modal.classList.add('active');
                             document.body.style.overflow = 'hidden'; // Prevent background scrolling
-                        }
-                    }
+                        });
+                }
+            });
+
+            gameCloseBtn.addEventListener('click', closeGame);
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && gameOverlay.classList.contains('active')) {
+                    closeGame();
                 }
             });
 
