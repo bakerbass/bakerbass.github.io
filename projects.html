@@ -175,48 +175,24 @@
 
             <!-- dB Drifter -->
             <article class="project-card-short">
-                <!-- TODO: swap in a real screenshot -->
-                <img src="assets/combosynth.png" alt="dB Drifter">
+                <img src="assets/decibel-drifter.png" alt="dB Drifter gameplay">
                 <div class="content">
                     <h3>dB Drifter</h3>
                     <p>An audiophile roguelite/driving game where sound literally powers your weapons and gear.</p>
-                    <button class="read-more-btn">Read More</button>
-
-                    <!-- Hidden Full Content -->
-                    <div class="full-content" style="display: none;">
-                        <h2>dB Drifter</h2>
-                        <p>dB Drifter is a driving roguelite prototype built around sound-powered weapons and gear
-                            upgrades. Playable build embedded below — WASD to drive, mouse to aim speakers, E or
-                            right-click to drop the bass.</p>
-                        <div style="position: relative; width: 100%; aspect-ratio: 16 / 10; border-radius: var(--radius); overflow: hidden; margin-bottom: var(--spacing-md);">
-                            <iframe src="games/decibel-drifter/index.html" title="dB Drifter (playable build)"
-                                loading="lazy" allow="autoplay" style="position: absolute; inset: 0; width: 100%; height: 100%; border: 0;"></iframe>
-                        </div>
-                        <p><a href="games/decibel-drifter/index.html" target="_blank" rel="noopener">Open dB Drifter fullscreen &rarr;</a></p>
-                        <!-- TODO: expand writeup -->
-                    </div>
+                    <button class="play-game-btn" data-game="games/decibel-drifter/index.html">Play now</button>
                 </div>
             </article>
 
-            <!-- chartr -->
-            <article class="project-card-short">
-                <!-- TODO: swap in a real screenshot -->
-                <img src="assets/combosynth.png" alt="chartr">
+            <!-- hearsal -->
+            <a class="project-card-short" href="https://hearsal.vercel.app" target="_blank" rel="noopener">
+                <img src="assets/hearsal.png" alt="hearsal app">
                 <div class="content">
-                    <h3>chartr</h3>
+                    <h3>hearsal</h3>
                     <p>A Next.js setlist app that pulls charts from Ultimate Guitar and playlists from Spotify, now
                         with offline/PWA support.</p>
-                    <button class="read-more-btn">Read More</button>
-
-                    <!-- Hidden Full Content -->
-                    <div class="full-content" style="display: none;">
-                        <h2>chartr</h2>
-                        <p>chartr helps performers build and run setlists, importing chord charts and playlists
-                            automatically and now working fully offline as a PWA.</p>
-                        <!-- TODO: expand writeup -->
-                    </div>
+                    <span class="read-more-btn">Try now</span>
                 </div>
-            </article>
+            </a>
 
             <!-- Boing -->
             <article class="project-card-short">
@@ -310,14 +286,36 @@
         </div>
     </div>
 
+    <!-- Fullscreen Game Overlay -->
+    <div class="game-fullscreen-overlay" id="gameFullscreenOverlay">
+        <button class="game-close-btn" id="gameCloseBtn" aria-label="Close game" title="Close">&times;</button>
+        <iframe id="gameFrame" src="" title="Playable game" allow="autoplay"></iframe>
+    </div>
+
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const modal = document.getElementById('projectModal');
             const modalBody = modal.querySelector('.modal-body');
             const closeBtn = modal.querySelector('.close-modal');
 
-            // Event Delegation for Open Modal
+            const gameOverlay = document.getElementById('gameFullscreenOverlay');
+            const gameFrame = document.getElementById('gameFrame');
+            const gameCloseBtn = document.getElementById('gameCloseBtn');
+
+            const closeGame = () => {
+                gameOverlay.classList.remove('active');
+                gameFrame.src = 'about:blank'; // stop gameplay/audio when closed
+                document.body.style.overflow = '';
+            };
+
+            // Event Delegation for Open Modal / Play Game
             document.addEventListener('click', (e) => {
+                if (e.target.matches('.play-game-btn')) {
+                    gameFrame.src = e.target.dataset.game;
+                    gameOverlay.classList.add('active');
+                    document.body.style.overflow = 'hidden';
+                    return;
+                }
                 if (e.target.matches('.read-more-btn')) {
                     const btn = e.target;
                     const card = btn.closest('.project-card-short');
@@ -330,6 +328,13 @@
                             document.body.style.overflow = 'hidden'; // Prevent background scrolling
                         }
                     }
+                }
+            });
+
+            gameCloseBtn.addEventListener('click', closeGame);
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && gameOverlay.classList.contains('active')) {
+                    closeGame();
                 }
             });
 

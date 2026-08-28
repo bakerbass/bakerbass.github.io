@@ -16,8 +16,8 @@
     "draft": true
   },
   {
-    "slug": "chartr-offline",
-    "title": "Chartr: Setlists That Work Offline",
+    "slug": "hearsal-offline",
+    "title": "hearsal: Setlists That Work Offline",
     "date": "2026-08-25",
     "description": "Shipping PWA/offline support for a setlist app that pulls charts from Ultimate Guitar and playlists from Spotify.",
     "tags": ["web", "music"],
